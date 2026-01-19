@@ -7,6 +7,7 @@ A Next.js-based CV builder application that allows users to create, edit, and ex
 - React component-based CV rendering
 - JSON-based CV data editing
 - Real-time preview of CV changes
+- Click-to-edit avatar photo (upload from device or set by URL; stored in `photoUrl`)
 - PDF export functionality using jsPDF and html2canvas (canvas slicing prefers safe breakpoints at elements marked with `data-cv-page-break="block"`)
 - Print functionality
 - Professional two-column CV layout matching provided design
@@ -38,3 +39,4 @@ A Next.js-based CV builder application that allows users to create, edit, and ex
 - Section titles are standardized via `src/components/cv/SectionTitle.tsx` (uppercase + tracking + horizontal rule)
 - Lists and timeline use circular markers for a more CV/PDF-like look
 - Header always reserves space for a photo; when `photoUrl` is not provided, a neutral placeholder is displayed
+- For PDF export compatibility, the avatar photo is rendered via CSS `background-image` with `background-size: cover` (more reliable than `<img>` + `object-fit` in canvas captures)

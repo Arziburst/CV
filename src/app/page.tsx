@@ -13,6 +13,19 @@ export default function Home() {
     JSON.stringify(cvData, null, 2)
   )
 
+  const updateCvData = (next: CVData) => {
+    setCvData(next)
+    setEditorCode(JSON.stringify(next, null, 2))
+  }
+
+  const handlePhotoUrlChange = (url?: string) => {
+    setCvData((prev) => {
+      const next = { ...prev, photoUrl: url || undefined }
+      setEditorCode(JSON.stringify(next, null, 2))
+      return next
+    })
+  }
+
   const handleExportPDF = async () => {
     try {
       await exportToPDF()
@@ -29,7 +42,7 @@ export default function Home() {
   const handleUpdateCV = () => {
     try {
       const parsed = JSON.parse(editorCode)
-      setCvData(parsed)
+      updateCvData(parsed)
       alert('CV updated successfully!')
     } catch (error) {
       alert('Invalid JSON. Please check your code.')
@@ -81,7 +94,7 @@ export default function Home() {
         )}
 
         <div className="bg-white rounded-lg shadow-lg p-4 print:shadow-none print:p-0">
-          <CVDocument data={cvData} />
+          <CVDocument data={cvData} onPhotoUrlChange={handlePhotoUrlChange} />
         </div>
       </div>
     </div>

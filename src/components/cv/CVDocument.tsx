@@ -11,16 +11,17 @@ import WorkExperience from './WorkExperience'
 
 interface CVDocumentProps {
   data: CVData
+  onPhotoUrlChange?: (url?: string) => void
 }
 
-export default function CVDocument({ data }: CVDocumentProps) {
+export default function CVDocument({ data, onPhotoUrlChange }: CVDocumentProps) {
   return (
     <div
       id="cv-document"
       className="bg-white w-[210mm] min-h-[297mm] mx-auto px-10 py-8 shadow-lg print:shadow-none print:p-6"
       style={{ pageBreakAfter: 'always' }}
     >
-      <Header data={data} />
+      <Header data={data} onPhotoUrlChange={onPhotoUrlChange} />
       
       <div className="grid grid-cols-[35%_1fr] gap-10">
         <div className="space-y-6 border-r-2 border-slate-300 pr-8">
