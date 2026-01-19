@@ -48,6 +48,36 @@ export const cvData: CVData = {
   ],
   "workExperience": [
     {
+      "company": "Phage & Bacteria Data Platform (PRECISE-MOCK)",
+      "customer": "Biobanks, Hospitals & Research Institutions",
+      "role": "Senior Frontend Engineer (Full-stack oriented)",
+      "period": "Mar 2025 - Jan 2026",
+      "responsibilities": [
+        "Built a role-based scientific data platform from scratch using Next.js App Router and TypeScript",
+        "Implemented role-based routing and access control, including invite completion flows",
+        "Integrated an OpenAPI-generated TypeScript client and established TanStack Query v5 for data fetching",
+        "Delivered admin modules for orders and analyses with tables, filters, pagination, and detail pages",
+        "Implemented large file uploads (up to 5GB) with validation for scientific formats and metadata",
+        "Improved data integrity by clarifying status-driven statistics logic and error handling"
+      ],
+      "isNDA": false
+    },
+    {
+      "company": "Beakpoint Insights",
+      "customer": "Cloud Cost & Observability SaaS",
+      "role": "Senior Frontend Engineer (Frontend-focused Full-stack)",
+      "period": "Feb 2025 - Aug 2025",
+      "responsibilities": [
+        "Built a multi-tenant cloud cost and observability web application from scratch",
+        "Designed frontend architecture in a Yarn + Turborepo monorepo with shared UI and API client",
+        "Implemented React 18 + TypeScript SPA using Vite and TanStack Router with file-based routing",
+        "Developed dashboards for cost analysis and traces (charts, tables, filters, detail views)",
+        "Delivered authentication and tenant management flows (users, roles, invites, API keys)",
+        "Added BDD/E2E coverage using Cucumber + Playwright to protect key user journeys"
+      ],
+      "isNDA": false
+    },
+    {
       "company": "DILA",
       "customer": "Ukrainian Medical Company",
       "role": "Senior Frontend Developer",

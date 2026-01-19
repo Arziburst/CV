@@ -19,6 +19,9 @@ A Next.js-based CV builder application that allows users to create, edit, and ex
 - `src/utils/pdfExport.ts` - PDF export utility
 - `src/app/page.tsx` - Main page with editor and preview
 
+## Recent Content Tweaks
+- Updated work experience entries to keep responsibilities concise and balanced across roles; adjusted the two latest entries' date ranges (Beakpoint: Feb 2025 - Aug 2025, PRECISE-MOCK: Mar 2025 - Jan 2026)
+
 ## Technology Stack
 - Next.js 14
 - React 18
