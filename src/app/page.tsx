@@ -2,26 +2,22 @@
 
 import { useState } from 'react'
 import CVDocument from '@/components/cv/CVDocument'
+import CVJsonEditorModal from '@/components/editor/CVJsonEditorModal'
 import { cvData as initialCvData } from '@/data/cvData'
 import type { CVData } from '@/types/cv'
 import { exportToPDF } from '@/utils/pdfExport'
 
 export default function Home() {
   const [cvData, setCvData] = useState<CVData>(initialCvData)
-  const [showEditor, setShowEditor] = useState(false)
-  const [editorCode, setEditorCode] = useState(
-    JSON.stringify(cvData, null, 2)
-  )
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
 
   const updateCvData = (next: CVData) => {
     setCvData(next)
-    setEditorCode(JSON.stringify(next, null, 2))
   }
 
   const handlePhotoUrlChange = (url?: string) => {
     setCvData((prev) => {
       const next = { ...prev, photoUrl: url || undefined }
-      setEditorCode(JSON.stringify(next, null, 2))
       return next
     })
   }
@@ -35,68 +31,46 @@ export default function Home() {
     }
   }
 
-  const handlePrint = () => {
-    window.print()
-  }
-
-  const handleUpdateCV = () => {
-    try {
-      const parsed = JSON.parse(editorCode)
-      updateCvData(parsed)
-      alert('CV updated successfully!')
-    } catch (error) {
-      alert('Invalid JSON. Please check your code.')
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-6 flex gap-4 justify-center items-center print:hidden">
-          <button
-            onClick={() => setShowEditor(!showEditor)}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            {showEditor ? 'Hide Editor' : 'Show Editor'}
-          </button>
-          <button
-            onClick={handleExportPDF}
-            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-          >
-            Export to PDF
-          </button>
-          <button
-            onClick={handlePrint}
-            className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-          >
-            Print
-          </button>
-        </div>
+        <div className="sticky top-4 z-40 mb-6 print:hidden">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white/80 backdrop-blur shadow-sm">
+            <div className="flex items-center justify-between gap-3 px-3 py-2">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsEditorOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold font-mono text-white hover:bg-slate-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-500/30"
+                >
+                  Editor
+                </button>
+              </div>
 
-        {showEditor && (
-          <div className="mb-6 bg-white rounded-lg shadow-lg p-4 print:hidden">
-            <div className="mb-4 flex justify-between items-center">
-              <h2 className="text-xl font-bold">Edit CV Data</h2>
-              <button
-                onClick={handleUpdateCV}
-                className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition-colors"
-              >
-                Update CV
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleExportPDF}
+                  className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-3 py-2 text-sm font-semibold font-mono text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-500/30"
+                >
+                  Export to PDF
+                </button>
+              </div>
             </div>
-            <textarea
-              value={editorCode}
-              onChange={(e) => setEditorCode(e.target.value)}
-              className="w-full h-96 p-4 border border-gray-300 rounded font-mono text-sm"
-              spellCheck={false}
-            />
           </div>
-        )}
+        </div>
 
         <div className="bg-white rounded-lg shadow-lg p-4 print:shadow-none print:p-0">
           <CVDocument data={cvData} onPhotoUrlChange={handlePhotoUrlChange} />
         </div>
       </div>
+
+      <CVJsonEditorModal
+        isOpen={isEditorOpen}
+        data={cvData}
+        onClose={() => setIsEditorOpen(false)}
+        onApply={(next) => updateCvData(next)}
+      />
     </div>
   )
 }

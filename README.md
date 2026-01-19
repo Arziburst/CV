@@ -5,7 +5,7 @@ A React-based CV builder application that allows you to create, edit, and export
 ## Features
 
 - View your CV in a professional format
-- Edit CV data using JSON editor
+- Edit CV data using a JSON editor modal
 - Real-time preview of changes
 - Export CV to PDF format
 - Print-friendly layout
@@ -35,9 +35,9 @@ npm start
 
 ## Usage
 
-1. Click "Show Editor" to edit CV data in JSON format
-2. Modify the JSON data as needed
-3. Click "Update CV" to see changes
+1. Click "Editor" to open the JSON editor modal
+2. Edit the JSON in full or by sections
+3. Click "Apply" to update the CV preview
 4. Click "Export to PDF" to download your CV as PDF
 
 ## Project Structure
