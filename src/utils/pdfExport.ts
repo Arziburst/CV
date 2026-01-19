@@ -52,6 +52,7 @@ export async function exportToPDF(filename = 'cv.pdf') {
 
   const minSliceHeightPx = Math.floor(pageHeightPx * 0.35)
   const overlapPx = Math.max(10, Math.floor(pageHeightPx * 0.02))
+  const topTrimPx = Math.max(8, Math.floor(pageHeightPx * 0.01))
 
   let sliceTopPx = 0
   let pageIndex = 0
@@ -72,7 +73,8 @@ export async function exportToPDF(filename = 'cv.pdf') {
     const paddedEnd = isLastPage
       ? canvas.height
       : Math.min(canvas.height, chosenEnd + overlapPx)
-    const sliceHeightPx = Math.max(1, paddedEnd - sliceTopPx)
+    const effectiveTop = pageIndex === 0 ? sliceTopPx : Math.min(canvas.height, sliceTopPx + topTrimPx)
+    const sliceHeightPx = Math.max(1, paddedEnd - effectiveTop)
 
     const pageCanvas = document.createElement('canvas')
     pageCanvas.width = canvas.width
@@ -86,7 +88,7 @@ export async function exportToPDF(filename = 'cv.pdf') {
     ctx.drawImage(
       canvas,
       0,
-      sliceTopPx,
+      effectiveTop,
       canvas.width,
       sliceHeightPx,
       0,
