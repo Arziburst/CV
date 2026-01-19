@@ -26,7 +26,7 @@ export async function exportToPDF(filename = 'cv.pdf') {
     .sort((a, b) => a - b)
 
   const canvas = await html2canvas(element, {
-    scale: 2,
+    scale: 3,
     useCORS: true,
     logging: false,
     backgroundColor: '#ffffff',
@@ -97,13 +97,13 @@ export async function exportToPDF(filename = 'cv.pdf') {
       sliceHeightPx
     )
 
-    const imgData = pageCanvas.toDataURL('image/png')
+    const imgData = pageCanvas.toDataURL('image/jpeg', 0.98)
     const sliceHeightMm = (sliceHeightPx * contentWidthMm) / canvas.width
 
     if (pageIndex > 0) {
       pdf.addPage()
     }
-    pdf.addImage(imgData, 'PNG', marginMm, marginMm, contentWidthMm, sliceHeightMm)
+    pdf.addImage(imgData, 'JPEG', marginMm, marginMm, contentWidthMm, sliceHeightMm, undefined, 'SLOW')
 
     // Start next page at the chosen breakpoint (not paddedEnd) to avoid duplicated lines.
     sliceTopPx = chosenEnd

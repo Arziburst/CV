@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useId, useRef, useState, type ChangeEvent } from 'react'
+import Cropper, { type Area, type Point } from 'react-easy-crop'
 import type { CVData } from '@/types/cv'
+import { cropToSquareDataUrl, type CropAreaPixels } from '@/utils/cropImage'
 
 interface HeaderProps {
   data: CVData
@@ -7,10 +9,16 @@ interface HeaderProps {
 }
 
 export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
+  const clipId = useId()
   const [isOpen, setIsOpen] = useState(false)
   const [urlValue, setUrlValue] = useState('')
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [pendingImageSrc, setPendingImageSrc] = useState<string | null>(null)
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<CropAreaPixels | null>(null)
+  const [isSavingCrop, setIsSavingCrop] = useState(false)
 
   const canEdit = Boolean(onPhotoUrlChange)
 
@@ -28,6 +36,10 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
     if (!canEdit) return
     setError(null)
     setUrlValue(data.photoUrl ?? '')
+    setPendingImageSrc(null)
+    setCrop({ x: 0, y: 0 })
+    setZoom(1)
+    setCroppedAreaPixels(null)
     setIsOpen(true)
   }
 
@@ -51,8 +63,10 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
       return
     }
 
-    onPhotoUrlChange(trimmed)
-    setIsOpen(false)
+    setPendingImageSrc(trimmed)
+    setCrop({ x: 0, y: 0 })
+    setZoom(1)
+    setCroppedAreaPixels(null)
   }
 
   const clearPhoto = () => {
@@ -82,8 +96,10 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
     reader.onload = () => {
       const result = reader.result
       if (typeof result === 'string' && result.startsWith('data:')) {
-        onPhotoUrlChange(result)
-        setIsOpen(false)
+        setPendingImageSrc(result)
+        setCrop({ x: 0, y: 0 })
+        setZoom(1)
+        setCroppedAreaPixels(null)
       } else {
         setError('Failed to read the file.')
       }
@@ -94,6 +110,42 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
       e.target.value = ''
     }
     reader.readAsDataURL(file)
+  }
+
+  const onCropComplete = (_: Area, areaPixels: Area) => {
+    setCroppedAreaPixels({
+      x: Math.round(areaPixels.x),
+      y: Math.round(areaPixels.y),
+      width: Math.round(areaPixels.width),
+      height: Math.round(areaPixels.height),
+    })
+  }
+
+  const saveCrop = async () => {
+    if (!onPhotoUrlChange) return
+    if (!pendingImageSrc) return
+    if (!croppedAreaPixels) {
+      setError('Please adjust the crop area.')
+      return
+    }
+
+    setError(null)
+    setIsSavingCrop(true)
+    try {
+      const output = await cropToSquareDataUrl({
+        imageSrc: pendingImageSrc,
+        crop: croppedAreaPixels,
+        outputSize: 1024,
+        mimeType: 'image/jpeg',
+        quality: 0.95,
+      })
+      onPhotoUrlChange(output)
+      setIsOpen(false)
+    } catch {
+      setError('Failed to process the image. If you used a URL, try uploading the file instead.')
+    } finally {
+      setIsSavingCrop(false)
+    }
   }
 
   return (
@@ -109,15 +161,29 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
           aria-label={canEdit ? 'Edit photo' : 'Photo'}
         >
           {data.photoUrl ? (
-            <div
+            <svg
               className="w-full h-full"
-              style={{
-                backgroundImage: `url(${data.photoUrl})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label={data.name}
+              role="img"
+            >
+              <defs>
+                <clipPath id={clipId}>
+                  <circle cx="50" cy="50" r="50" />
+                </clipPath>
+              </defs>
+              <image
+                href={data.photoUrl}
+                xlinkHref={data.photoUrl}
+                x="0"
+                y="0"
+                width="100"
+                height="100"
+                preserveAspectRatio="xMidYMid slice"
+                clipPath={`url(#${clipId})`}
+              />
+            </svg>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-400 flex items-center justify-center">
               <svg
@@ -186,7 +252,7 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
         </h1>
       </div>
 
-      <div className="absolute right-0 top-[5.6rem] bg-teal-700 px-6 py-2">
+      <div className="absolute right-0 top-20 h-10 flex items-center px-6">
         <h2 className="text-[12px] font-semibold uppercase tracking-[0.22em] text-white">
           {data.title}
         </h2>
@@ -235,49 +301,122 @@ export default function Header({ data, onPhotoUrlChange }: HeaderProps) {
             </div>
 
             <div className="mt-4 grid gap-4">
-              <div className="flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={onPickFile}
-                  className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
-                >
-                  Choose file
-                </button>
-                {data.photoUrl && (
-                  <button
-                    type="button"
-                    onClick={clearPhoto}
-                    className="px-4 py-2 bg-slate-100 text-slate-800 rounded-lg hover:bg-slate-200 transition-colors"
-                  >
-                    Remove photo
-                  </button>
-                )}
-              </div>
+              {pendingImageSrc ? (
+                <div className="grid gap-3">
+                  <div className="relative w-full h-64 bg-slate-900 rounded-lg overflow-hidden">
+                    <Cropper
+                      image={pendingImageSrc}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={1}
+                      cropShape="round"
+                      showGrid={false}
+                      onCropChange={setCrop}
+                      onZoomChange={setZoom}
+                      onCropComplete={onCropComplete}
+                    />
+                  </div>
 
-              <div className="grid gap-2">
-                <label className="text-sm font-medium text-slate-700">
-                  Image URL
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    value={urlValue}
-                    onChange={(e) => setUrlValue(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-teal-500/20"
-                    placeholder="https://example.com/photo.jpg"
-                    inputMode="url"
-                  />
-                  <button
-                    type="button"
-                    onClick={applyUrl}
-                    className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors"
-                  >
-                    Use URL
-                  </button>
+                  <div className="grid gap-2">
+                    <div className="text-sm font-medium text-slate-700">
+                      Zoom
+                    </div>
+                    <input
+                      type="range"
+                      min={1}
+                      max={3}
+                      step={0.01}
+                      value={zoom}
+                      onChange={(e) => setZoom(Number(e.target.value))}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPendingImageSrc(null)
+                        setError(null)
+                      }}
+                      className="px-4 py-2 bg-slate-100 text-slate-800 rounded-lg hover:bg-slate-200 transition-colors"
+                      disabled={isSavingCrop}
+                    >
+                      Back
+                    </button>
+                    <div className="flex items-center gap-3">
+                      {data.photoUrl && (
+                        <button
+                          type="button"
+                          onClick={clearPhoto}
+                          className="px-4 py-2 bg-slate-100 text-slate-800 rounded-lg hover:bg-slate-200 transition-colors"
+                          disabled={isSavingCrop}
+                        >
+                          Remove photo
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={saveCrop}
+                        className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors disabled:opacity-60"
+                        disabled={isSavingCrop}
+                      >
+                        {isSavingCrop ? 'Saving...' : 'Save crop'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {error && (
+                    <div className="text-sm text-red-600">{error}</div>
+                  )}
                 </div>
-                {error && (
-                  <div className="text-sm text-red-600">{error}</div>
-                )}
-              </div>
+              ) : (
+                <>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={onPickFile}
+                      className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+                    >
+                      Choose file
+                    </button>
+                    {data.photoUrl && (
+                      <button
+                        type="button"
+                        onClick={clearPhoto}
+                        className="px-4 py-2 bg-slate-100 text-slate-800 rounded-lg hover:bg-slate-200 transition-colors"
+                      >
+                        Remove photo
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid gap-2">
+                    <label className="text-sm font-medium text-slate-700">
+                      Image URL
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        value={urlValue}
+                        onChange={(e) => setUrlValue(e.target.value)}
+                        className="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-teal-500/20"
+                        placeholder="https://example.com/photo.jpg"
+                        inputMode="url"
+                      />
+                      <button
+                        type="button"
+                        onClick={applyUrl}
+                        className="px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors"
+                      >
+                        Crop URL
+                      </button>
+                    </div>
+                    {error && (
+                      <div className="text-sm text-red-600">{error}</div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

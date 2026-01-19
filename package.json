@@ -14,7 +14,8 @@
     "jspdf": "^2.5.2",
     "next": "^14.2.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-easy-crop": "^5.5.6"
   },
   "devDependencies": {
     "@types/node": "^20.14.12",
