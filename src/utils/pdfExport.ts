@@ -36,10 +36,13 @@ export async function exportToPDF(filename = 'cv.pdf') {
 
   const pageWidthMm = pdf.internal.pageSize.getWidth()
   const pageHeightMm = pdf.internal.pageSize.getHeight()
+  const marginMm = 5
+  const contentWidthMm = pageWidthMm - marginMm * 2
+  const contentHeightMm = pageHeightMm - marginMm * 2
 
   // When we draw the image at pageWidthMm, canvas.width maps to pageWidthMm.
   // So one page height in canvas pixels is:
-  const pageHeightPx = Math.floor((canvas.width * pageHeightMm) / pageWidthMm)
+  const pageHeightPx = Math.floor((canvas.width * contentHeightMm) / contentWidthMm)
 
   const scalePx = canvas.width / elementRect.width
   const breakpointsPx = breakpointsCssPx
@@ -48,6 +51,7 @@ export async function exportToPDF(filename = 'cv.pdf') {
     .sort((a, b) => a - b)
 
   const minSliceHeightPx = Math.floor(pageHeightPx * 0.35)
+  const overlapPx = Math.max(10, Math.floor(pageHeightPx * 0.02))
 
   let sliceTopPx = 0
   let pageIndex = 0
@@ -64,7 +68,11 @@ export async function exportToPDF(filename = 'cv.pdf') {
       }
     }
 
-    const sliceHeightPx = Math.max(1, chosenEnd - sliceTopPx)
+    const isLastPage = chosenEnd >= canvas.height
+    const paddedEnd = isLastPage
+      ? canvas.height
+      : Math.min(canvas.height, chosenEnd + overlapPx)
+    const sliceHeightPx = Math.max(1, paddedEnd - sliceTopPx)
 
     const pageCanvas = document.createElement('canvas')
     pageCanvas.width = canvas.width
@@ -88,14 +96,15 @@ export async function exportToPDF(filename = 'cv.pdf') {
     )
 
     const imgData = pageCanvas.toDataURL('image/png')
-    const sliceHeightMm = (sliceHeightPx * pageWidthMm) / canvas.width
+    const sliceHeightMm = (sliceHeightPx * contentWidthMm) / canvas.width
 
     if (pageIndex > 0) {
       pdf.addPage()
     }
-    pdf.addImage(imgData, 'PNG', 0, 0, pageWidthMm, sliceHeightMm)
+    pdf.addImage(imgData, 'PNG', marginMm, marginMm, contentWidthMm, sliceHeightMm)
 
-    sliceTopPx += sliceHeightPx
+    // Start next page at the chosen breakpoint (not paddedEnd) to avoid duplicated lines.
+    sliceTopPx = chosenEnd
     pageIndex += 1
   }
 
