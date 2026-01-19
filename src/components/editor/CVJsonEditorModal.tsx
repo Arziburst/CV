@@ -411,11 +411,11 @@ export default function CVJsonEditorModal({
         <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-[260px_1fr]">
           <div className="min-h-0 border-b md:border-b-0 md:border-r border-slate-200 bg-slate-50">
             <div className="h-full min-h-0 overflow-auto p-2">
-              <div className="mb-2 rounded-xl border border-slate-200 bg-white px-3 py-2">
-                <div className="text-xs font-semibold font-mono text-slate-900">
+              <div className="mb-2 rounded-xl border border-teal-200 bg-teal-50 px-3 py-2">
+                <div className="text-xs font-semibold font-mono text-teal-900">
                   Quick workflow
                 </div>
-                <div className="mt-1 text-xs text-slate-600 leading-5">
+                <div className="mt-1 text-xs text-teal-900/80 leading-5">
                   Copy the template JSON, paste it into your GPT chat, ask it to fill
                   your real data, then paste the valid JSON back here (Full JSON) and
                   press Apply.

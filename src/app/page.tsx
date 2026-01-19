@@ -41,9 +41,9 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setIsEditorOpen(true)}
-                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold font-mono text-white hover:bg-slate-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-500/30"
+                  className="inline-flex items-center gap-2 rounded-xl bg-teal-700 px-3 py-2 text-sm font-semibold font-mono text-white hover:bg-teal-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-teal-500/30"
                 >
-                  Editor
+                  PDF Editor
                 </button>
               </div>
 

@@ -9,7 +9,7 @@ A Next.js-based CV builder application that allows users to create, edit, and ex
 - Real-time preview of CV changes
 - Click-to-edit avatar photo (upload from device or set by URL) with built-in cropping; stored in `photoUrl`
 - PDF export functionality using jsPDF and html2canvas (canvas slicing prefers safe breakpoints at elements marked with `data-cv-page-break="block"`)
-- Editor modal provides section-based editing and a "Copy template JSON" action (with toast/status message, scroll lock, and fixed sidebar scrolling using min-h-0) for prompting external tools (e.g. LLM) and pasting the filled result back
+- Editor modal provides section-based editing and a "Copy template JSON" action (with toast/status message, scroll lock, and fixed sidebar scrolling using min-h-0). The workflow hint is visually highlighted to stand out from the active section
 - Professional two-column CV layout matching provided design
 
 ## Project Structure

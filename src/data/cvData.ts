@@ -1,192 +1,172 @@
 import type { CVData } from '@/types/cv'
 
 export const cvData: CVData = {
-  name: 'OLEKSANDR KONYK',
-  title: 'SENIOR JAVASCRIPT DEVELOPER',
-  profile: 'Experienced Senior JavaScript Developer with 10+ years in full-cycle development. Skilled in front-end and back-end technologies, specializing in building scalable and high-performance applications. Adept at optimizing code, improving system architecture, and implementing best practices. Known for effective communication, innovative problem-solving, and a commitment to continuous learning.',
-  contact: {
-    phone: '+380637531252',
-    email: 'arziburst@gmail.com',
-    linkedin: 'Linkedin',
-    github: '@Arziburst',
+  "name": "OLEKSANDR KONYK",
+  "title": "Senior Frontend / JavaScript Engineer",
+  "profile": "Senior JavaScript Engineer with 10+ years of commercial experience building complex web applications, admin panels, and SaaS products. Strong expertise in React, Next.js, and TypeScript, with hands-on leadership experience as Frontend Lead. Focused on scalable architecture, performance optimization, clean code, and effective collaboration with product and backend teams.",
+  "contact": {
+    "phone": "+380637531252",
+    "email": "arziburst@gmail.com",
+    "linkedin": "https://linkedin.com/in/arziburst",
+    "github": "https://github.com/Arziburst"
   },
-  skills: [
-    { name: 'Typescript' },
-    { name: 'Next.js, React' },
-    { name: 'HTML5, CSS3' },
-    { name: 'Redux/Redux Toolkit' },
-    { name: 'Styled components' },
-    { name: 'Tailwind CSS' },
-    { name: 'Webpack' },
-    { name: 'Node.js' },
+  "skills": [
+    { "name": "JavaScript (ES6+)" },
+    { "name": "TypeScript" },
+    { "name": "React" },
+    { "name": "Next.js" },
+    { "name": "HTML5 / CSS3" },
+    { "name": "Redux / Redux Toolkit" },
+    { "name": "Tailwind CSS" },
+    { "name": "Styled Components" },
+    { "name": "Webpack" },
+    { "name": "Node.js" },
+    { "name": "REST APIs" },
+    { "name": "Git / Code Review" }
   ],
-  languages: [
-    { name: 'English', level: 'Upper intermediate' },
-    { name: 'Ukrainian', level: 'Native' },
+  "languages": [
+    {
+      "name": "English",
+      "level": "Upper-Intermediate (B2)"
+    },
+    {
+      "name": "Ukrainian",
+      "level": "Native"
+    }
   ],
-  education: [
+  "education": [
     {
-      period: '2016 - 2017',
-      institution: 'GOIT',
-      degree: 'Front-end Developer (Javascript, HTML, CSS)',
+      "period": "2016 - 2017",
+      "institution": "GOIT",
+      "degree": "Front-End Development (JavaScript, HTML, CSS)"
     },
     {
-      period: '2017 - 2017 June',
-      institution: 'LECTRUM UNIVERSITY',
-      degree: 'Extended course of React, Redux, Typescript',
-    },
+      "period": "2017",
+      "institution": "Lectrum University",
+      "degree": "Advanced React, Redux & TypeScript"
+    }
   ],
-  workExperience: [
+  "workExperience": [
     {
-      company: 'DILA',
-      customer: 'Ukrainian medical company',
-      role: 'Front-end developer',
-      period: 'May 2024 - Dec 2024',
-      responsibilities: [
-        'Implemented user-friendly interfaces using React.js.',
-        'Optimized front-end performance to improve application speed.',
-        'Developed reusable components for consistency across the platform.',
-        'Ensured cross-browser compatibility and responsive design.',
-        'Collaborated with the back-end team for seamless API integration.',
-        'Refactored existing codebases to improve readability and maintainability.',
-      ],
+      "company": "DILA",
+      "customer": "Ukrainian Medical Company",
+      "role": "Senior Frontend Developer",
+      "period": "May 2024 - Dec 2024",
+      "responsibilities": [
+        "Developed and maintained complex user interfaces using React and TypeScript",
+        "Improved application performance and reduced rendering bottlenecks",
+        "Built reusable UI components and shared design patterns",
+        "Collaborated closely with backend engineers on API integration",
+        "Refactored legacy code to improve readability and maintainability"
+      ]
     },
     {
-      company: 'Freelance',
-      role: 'Full-stack Javascript developer',
-      period: 'Jan 2024 - May 2024',
-      responsibilities: [
-        'Designed and developed full-stack web applications using React.js and Node.js.',
-        'Created and maintained RESTful APIs for client-server communication.',
-        'Integrated third-party libraries and APIs to enhance functionality.',
-        'Wrote unit and integration tests to ensure code quality.',
-        'Client and Department Interaction. Technical Problem Solving.',
-      ],
+      "company": "Freelance",
+      "role": "Senior Full-Stack JavaScript Developer",
+      "period": "Jan 2024 - May 2024",
+      "responsibilities": [
+        "Designed and implemented full-stack applications using React and Node.js",
+        "Developed and maintained RESTful APIs",
+        "Integrated third-party services and libraries",
+        "Ensured code quality via testing and reviews",
+        "Worked directly with clients on requirements and technical solutions"
+      ]
     },
     {
-      company: 'GoHard',
-      customer: 'Ukrainian IT company',
-      role: 'Front-end lead',
-      period: 'Dec 2022 - Jan 2024',
-      responsibilities: [
-        'Development Team Management.',
-        'Project Planning Participation.',
-        'Technical Leadership.',
-        'Quality Control',
-        'Client and Department Interaction. Technical Problem Solving.',
-        'Mentoring/Couching',
-      ],
+      "company": "GoHard",
+      "customer": "Ukrainian IT Company",
+      "role": "Frontend Lead",
+      "period": "Dec 2022 - Jan 2024",
+      "responsibilities": [
+        "Led frontend development team and owned technical decisions",
+        "Participated in project planning and architecture discussions",
+        "Reviewed code and ensured frontend quality standards",
+        "Mentored developers and supported team growth",
+        "Communicated directly with clients and stakeholders"
+      ]
     },
     {
-      company: 'The Nafuro admin panel',
-      customer: 'First Abu Dhabi Bank - UAE',
-      role: 'Front-end lead',
-      period: 'Mar 2022 - Dec 2022',
-      isNDA: true,
-      responsibilities: [
-        'Development main part of Nafuro admin panel architecture.',
-        'Communication with the teams of product managers, back-end developers and testers. Participating on daily meetings, discussing of features.',
-        'Refactor and bugfix. Code review.',
-        'Defining and delegating tasks.',
+      "company": "Nafuro Admin Panel",
+      "customer": "First Abu Dhabi Bank (UAE)",
+      "role": "Frontend Lead",
+      "period": "Mar 2022 - Dec 2022",
+      "responsibilities": [
+        "Designed and implemented core architecture of the admin panel",
+        "Worked closely with product managers, backend engineers, and QA",
+        "Performed large-scale refactoring and code reviews",
+        "Planned and delegated frontend tasks within the team"
       ],
+      "isNDA": true
     },
     {
-      company: 'Master Delivery admin panel',
-      customer: 'Kazakhstan private customer',
-      role: 'Front-end lead',
-      period: 'Sep 2021 - Feb 2022',
-      isNDA: true,
-      responsibilities: [
-        'Development and maintain of auth, orders, dashboard, shifts, map, reports modules.',
-        'Close communication with the teams of product managers, back-end developers and testers. Participating on daily meetings, discussing of features.',
-        'Taking part in project architecture development, discussing of tools to use.',
-        'Webpack script modification. Integration of third party libraries. Refactor and bugfix. Make documentation with JSDoc. Defining and delegating tasks.',
+      "company": "Master Delivery Admin Panel",
+      "customer": "Private Client (Kazakhstan)",
+      "role": "Frontend Lead",
+      "period": "Sep 2021 - Feb 2022",
+      "responsibilities": [
+        "Developed authentication, dashboards, orders, maps, reports, and shifts modules",
+        "Participated in architecture decisions and tooling selection",
+        "Maintained and optimized Webpack configuration",
+        "Integrated third-party libraries and documented code with JSDoc",
+        "Led task delegation and code reviews"
       ],
+      "isNDA": true
     },
     {
-      company: 'Cinemator startup',
-      customer: 'Ukraine, National Film Studio',
-      role: 'Full-stack developer',
-      period: 'Apr 2021 - Aug 2021',
-      responsibilities: [
-        'Development of the interface for the application. Development of the server side for the application. Deploy application in cloud. Maintaining of codebase Bugfix, Refactor.',
-        'Client communication. Code review. Defining and delegating tasks.',
-      ],
+      "company": "Cinemator",
+      "customer": "National Film Studio of Ukraine",
+      "role": "Full-Stack JavaScript Developer",
+      "period": "Apr 2021 - Aug 2021",
+      "responsibilities": [
+        "Developed frontend and backend parts of the application",
+        "Handled cloud deployment and production setup",
+        "Maintained and refactored existing codebase",
+        "Communicated directly with stakeholders"
+      ]
     },
     {
-      company: 'Pulser',
-      customer: 'NDA Customer',
-      role: 'Front-end developer',
-      period: 'Jan 2020 - Mar 2021',
-      responsibilities: [
-        'Development of the interface for the application.',
-        'Close communication with the team. Refactor, bugfix.',
-      ],
+      "company": "Pulser",
+      "customer": "NDA Client",
+      "role": "Frontend Developer",
+      "period": "Jan 2020 - Mar 2021",
+      "responsibilities": [
+        "Developed and maintained user interfaces",
+        "Refactored existing code and fixed bugs",
+        "Worked closely with the development team"
+      ]
     },
     {
-      company: 'Thermaco',
-      customer: 'USA private customer',
-      role: 'Front-end developer',
-      period: 'Nov 2018 - Dec 2019',
-      responsibilities: [
-        'Development Team Management. Project Planning Participation.',
-        'Technical Leadership. Quality Control.',
-        'Client and Department Interaction. Technical Problem Solving.',
-        'Mentoring/Couching.',
-      ],
+      "company": "Thermaco",
+      "customer": "Private Client (USA)",
+      "role": "Frontend Developer",
+      "period": "Nov 2018 - Dec 2019",
+      "responsibilities": [
+        "Provided frontend technical leadership",
+        "Participated in project planning and architecture discussions",
+        "Ensured code quality and mentored developers"
+      ]
     },
     {
-      company: 'EOS Monitor',
-      customer: 'Germany private customer',
-      role: 'Front-end developer',
-      period: 'Sep 2017 - Nov 2018',
-      responsibilities: [
-        'Development of the interface for the application.',
-        'Maintaining of codebase. Bugfix, Refactor.',
-        'Client communication.',
-      ],
+      "company": "EOS Monitor",
+      "customer": "Private Client (Germany)",
+      "role": "Frontend Developer",
+      "period": "Sep 2017 - Nov 2018",
+      "responsibilities": [
+        "Built and maintained application interfaces",
+        "Handled bug fixes and refactoring",
+        "Communicated directly with the client"
+      ]
     },
     {
-      company: 'VDNG',
-      customer: 'Ukraine culture government',
-      role: 'Front-end developer',
-      period: 'June 2017 - Sep 2017',
-      responsibilities: [
-        'Development of the interface for the application.',
-        'Maintaining of codebase. Bugfix, Refactor.',
-      ],
-    },
-    {
-      company: 'TJStore startup',
-      customer: 'Ukraine private customer',
-      role: 'Full-stack developer',
-      period: 'Aug 2016 - May 2017',
-      responsibilities: [
-        'Development of the interface for the application.',
-        'Development of the server side for the application.',
-        'Deploy application in cloud.',
-        'Maintaining of codebase Bugfix, Refactor.',
-        'Client communication.',
-      ],
-    },
-    {
-      company: 'Nova Massage',
-      customer: 'Germany private customer',
-      role: 'Full-stack developer',
-      period: 'Dec 2017 - Apr 2017',
-      responsibilities: [
-        'Development of the interface for the application.',
-        'Maintaining of codebase. Bugfix, Refactor.',
-      ],
-    },
-    {
-      company: 'Burst',
-      customer: 'Open source. Eternal development',
-      role: 'Founder',
-      period: '',
-      responsibilities: [
-        'Development from idea to modern template for the React application.',
-      ],
-    },
-  ],
+      "company": "Burst",
+      "customer": "Open Source Project",
+      "role": "Founder",
+      "period": "Ongoing",
+      "responsibilities": [
+        "Built a React application template from idea to production-ready solution",
+        "Maintains and evolves the project as an open-source initiative"
+      ]
+    }
+  ]
 }
+
