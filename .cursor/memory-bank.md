@@ -45,3 +45,4 @@ A Next.js-based CV builder application that allows users to create, edit, and ex
 - For PDF export compatibility, the avatar photo is rendered via SVG `<image>` with `preserveAspectRatio="xMidYMid slice"` (keeps "cover" behavior and avoids PDF distortion/blur)
 - Avatar photos are cropped client-side to a high-resolution square (currently 1024x1024 JPEG) before saving to `photoUrl` to keep PDF quality high
 - PDF export uses a higher `html2canvas` scale and high-quality page encoding to keep images sharp
+- Default avatar image is served from `public/photo_2026-01-19_23-27-210.jpg` and referenced in `src/data/cvData.ts` via `photoUrl`

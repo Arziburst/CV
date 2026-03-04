@@ -3,6 +3,7 @@ import type { CVData } from '@/types/cv'
 export const cvData: CVData = {
   "name": "OLEKSANDR KONYK",
   "title": "Senior Frontend / JavaScript Engineer",
+  "photoUrl": "/photo_2026-01-19_23-27-210.jpg",
   "profile": "Senior JavaScript Engineer with 10+ years of commercial experience building complex web applications, admin panels, and SaaS products. Strong expertise in React, Next.js, and TypeScript, with hands-on leadership experience as Frontend Lead. Focused on scalable architecture, performance optimization, clean code, and effective collaboration with product and backend teams.",
   "contact": {
     "phone": "+380637531252",
